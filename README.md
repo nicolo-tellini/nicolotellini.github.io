@@ -1,1 +1,3 @@
 # nicolotellini.github.io
+
+This is a personal static website. Work in progress ...
