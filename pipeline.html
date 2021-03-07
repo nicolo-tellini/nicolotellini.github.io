@@ -11,7 +11,7 @@
 
 
 
-<title>About Me</title>
+<title>Data Frame</title>
 
 <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -312,16 +312,55 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">About Me</h1>
+<h1 class="title toc-ignore">Data Frame</h1>
 
 </div>
 
 
-<p><img style="float: left;" src="images/foto%20nico.jpg" ></p>
-<p>  I am a PhD student in <em>Evolutionary Genomics</em> at the <a href="https://ircan.org/en/">IRCAN institute</a> Faculté de Médecine in <a href="http://www.nice.fr/fr/">Nice-Ville</a> in <a href="https://litilab.wordpress.com/">Gianni Liti’s team</a>.</p>
-<p>  My research interests are in <em>evolutionary genomics</em> and <em>bionformatics</em> methods for studying how genomes change.</p>
-<p>  I graduated in Molecular Biotechnology in 2018 at The University of Florence.</p>
-<p>  I am an R person, even if I do not disdain other languages.</p>
+<p>When you subset a data frame, it does not necessarily return a data frame. For example, if you subset two columns, you get a data frame, but when you try to subset one column, you get a vector:</p>
+<pre class="r"><code>mtcars[1:5, &quot;mpg&quot;]</code></pre>
+<pre class="bg-warning"><code>## [1] 21.0 21.0 22.8 21.4 18.7</code></pre>
+<p>To make sure that we always get a data frame, we have to use the argument <code>drop = FALSE</code>. Now we use the chunk option <code>class.source = "bg-success"</code>.</p>
+<pre class="r bg-success"><code>mtcars[1:5, &quot;mpg&quot;, drop = FALSE]</code></pre>
+<pre><code>##                    mpg
+## Mazda RX4         21.0
+## Mazda RX4 Wag     21.0
+## Datsun 710        22.8
+## Hornet 4 Drive    21.4
+## Hornet Sportabout 18.7</code></pre>
+<p>The data frame is the object that represents a table, where each column can be seen as a vector.</p>
+<p>The function <code>data.frame()</code> allows us to organize vectors composing a table.</p>
+<p>The length of each column must be the same, like with the matrices, but different columns can store different data type.</p>
+<pre class="r"><code># character vector
+patients_names = c(&quot;Tom&quot;,&quot;Sarah&quot;,&quot;Felipe&quot;) 
+
+# numeric vector
+age = c(18,25,32) 
+
+# factor
+test_results = factor(c(&quot;+&quot;,&quot;-&quot;,&quot;-&quot;),levels = c(&quot;+&quot;,&quot;-&quot;)) 
+
+p = data.table::data.table(patients_names,age,test_results)</code></pre>
+<p>Every time we approach a data frame, we need to keep in mind its structure and composition.</p>
+<p>In some (not so rare) cases we upload datasets from third parties and so it is a good practice become familiar with the data frame we are going to analyse.</p>
+<p>Some useful functions are: dim(), str() and summary().</p>
+<p>my_data_frame = data.frame(patients_names,age,test_results)</p>
+<p>my_data_frame patients_names age test_results 1 Tom 18 + 2 Sarah 25 - 3 Felipe 32 -</p>
+<p>dim(my_data_frame) # returns number of rows and number of columns [1] 3 3</p>
+<p>str(my_data_frame) ‘data.frame’: 3obs. of 3 variables $ patients_names: Factor w/ 3 levels “Felipe”,“Sarah”,..: 3 2 1 $ age : num 18 25 32 $ test_results : Factor w/ 2 levels “+”,“-”: 1 2 2</p>
+<p>summary(my_data_frame) patients_names age test_results Felipe:1 Min. :18.0 +:1<br />
+Sarah :1 1st Qu.:21.5 -:2<br />
+Tom :1 Median :25.0<br />
+Mean :25.0<br />
+3rd Qu.:28.5<br />
+Max. :32.0<br />
+str() returns the structure of an object. It tells us that our object is a data frame with 3 observations (rows) and 3 variables (columns). The first and third columns are factors while the second is a numeric vector. By default data.frame() converts character vectors in factors (note: at the beginning we defined patients_names as a vector not as a factor); to change this we need to specify the option stringsAsFactors = F, inside the function data.frame().</p>
+<p>The first column is a factor with 3 levels: “Felipe”, “Sarah” and “Tom” (remember: the order of the levels follows the alphabetical order unless we specify it). The following 3 2 and 1 say us that “Felipe” (the first level) is in the third position of the factor, “Sarah” in the second position and “Tom” in the first one.</p>
+<p>The second column is a vector with the ages : 18, 25 and 32.</p>
+<p>The third column is a factor with 2 levels: “+”, and “-” ( in this order because we specified it at the beginning with the option levels). The following 1, 2 and 2 say us that “+” is in the first position while “-” is in the second and in the third.</p>
+<p>Finally, summary() returns a summary of the content per each column.</p>
+<p>The first and the third columns contain characters, so we get the number of occurrences of each element inside them.</p>
+<p>The second column contains numeric data so we get a statistical summary of its content: min and max values, median and mean, 1° and 3° quartile.</p>
 
 
 
